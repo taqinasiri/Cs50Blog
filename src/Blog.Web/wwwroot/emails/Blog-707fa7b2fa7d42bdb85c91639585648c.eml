@@ -1,0 +1,26 @@
+From: Blog <Blog.example>
+Date: Thu, 24 Nov 2022 15:01:06 +0330
+Subject: Confirmation account
+Message-Id: <J738101GHIU4.ERURMX6GKRKN3@nasiri>
+To: cs50@test.com
+MIME-Version: 1.0
+Content-Type: text/html; charset=utf-8
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Confirm Email</title>
+    <style>
+        * {
+            font-family: tahoma;
+        }
+    </style>
+</head>
+<body dir="rtl">
+    <h3>
+    CSFifty 
+    <br />
+    Register date : 11/24/2022 3:01:06 PM
+</h3>
+<a href="https://localhost:44309/Account/ConfirmationAccount?code=CfDJ8Ab8xFimv1NDm2hHm%2BnUhKSoRJUaz6h9BuXYvtKYEEs0f1AU0Vovrn%2Fh6mmOGoIJO%2FTGThfO5nNTziMmbXV7vtgmo8FzZ5dq1EgwDXQmnAvxYMPo7j1RDepkFm3xq6GNNLbIj8VP01VmN%2BT234qNWsS%2FBZ2y3qnaDS2RXj3KdFZspAWYkqChVbi2zVMnE8wr3g%3D%3D&amp;userName=CSFifty">Confirm Email</a>
+</body>
+</html>

@@ -1,0 +1,60 @@
+﻿@using Blog.ViewModels.Roles;
+@using Blog.Web.Areas.Admin.Controllers;
+@using Blog.Common.Extensions
+@model EditRoleViewModel
+@{
+    ViewData["Title"] = "ویرایش نقش";
+    var permissions = typeof(ManageRolesController).Assembly.GetAreaControllerActionNames().Where(a => a.Area == "Admin").Distinct().ToList();
+}
+<h3 class="bg-soft-info p-3 mx-2 rounded-3 text-dark text-center">ویرایش نقش</h3>
+<div class="bg-soft-info text-dark rounded-3 mx-2 p-3">
+    <form method="post" asp-action="EditRole">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input asp-for="Id"/>
+        <div class="col-md-12">
+            <div class="mb-3">
+                <label asp-for="Name" class="form-label"></label>
+                <div class="form-icon position-relative">
+                    <i class="icons mdi mdi-account"></i>
+                    <input asp-for="Name" class="form-control ps-5">
+                    <span asp-validation-for="Name" class="text-danger"></span><br />
+                </div>
+            </div>
+        </div>
+        <label class="form-label">@Html.DisplayNameFor(model => model.Permissions)</label>
+        <div class="col-md-12 text-end" dir="ltr">
+            <div class="table-responsive bg-white shadow rounded text-end" dir="ltr">
+                <table class="table mb-0 table-center">
+                    <thead>
+                        <tr>
+                            <th scope="col" class="border-bottom">✔</th>
+                            <th scope="col" class="border-bottom">Area</th>
+                            <th scope="col" class="border-bottom">Controller</th>
+                            <th scope="col" class="border-bottom">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in permissions)
+                        {
+                            <tr>
+                                <td>
+                                 <input class="form-check-input" type="checkbox" value="@item.GetAll" name="Permissions"
+                                    @(Model.Permissions.Any(p => p == item.GetAll)? "checked":"")>
+                                </td>
+                                <td>@item.Area</td>
+                                <td>@item.Controller</td>
+                                <td>@item.Action</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-md-12 mt-2">
+            <button class="btn btn-info w-100">ثبت</button>
+        </div>
+    </form>
+</div>
+@section Scripts{
+    <partial name="_ValidationScriptsPartial"/>
+}

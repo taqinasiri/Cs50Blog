@@ -1,0 +1,32 @@
+﻿@model IEnumerable<Blog.ViewModels.Post.ShowListPostsViewModel>
+
+@{
+    ViewData["Title"] = "All Post";
+}
+
+<a asp-controller="Admin" asp-action="AddPost" class="btn btn-primary d-block mt-2">Add Post</a>
+
+<table class="table">
+    <thead>
+    <tr>
+        <td>Actions</td>
+        <th scope="col">@Html.DisplayNameFor(p => p.Title)</th>
+        <th scope="col">@Html.DisplayNameFor(p => p.Cover)</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                <a asp-action="EditPost" asp-controller="Admin" asp-route-postId="@item.Id" class="btn btn-primary d-block">Edit</a>
+                <form asp-action="DeletePost" asp-controller="Admin" asp-route-postId="@item.Id" class="">
+                    <button type="submit" class="btn btn-danger mt-2" style="width: 100%">Delete</button>
+                </form>
+            </td>
+            <td>@item.Title</td>
+            <td><img src="/img/covers/@item.Cover" alt="@item.Title" class="img-thumbnail" width="200"/></td>
+        </tr>
+    }
+    </tbody>
+</table>

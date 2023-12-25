@@ -1,0 +1,25 @@
+﻿@model IEnumerable<Blog.Common.Extensions.AreaControllerActionName>
+@{
+    ViewData["Title"] = "لیست دسترسی ها";
+}
+<div class="table-responsive bg-white shadow rounded text-end" dir="ltr">
+    <table class="table mb-0 table-center">
+        <thead>
+            <tr>
+                <th scope="col" class="border-bottom">@Html.DisplayNameFor(model => model.First().Area)</th>
+                <th scope="col" class="border-bottom">@Html.DisplayNameFor(model => model.First().Controller)</th>
+                <th scope="col" class="border-bottom">@Html.DisplayNameFor(model => model.First().Action)</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Area</td>
+                <td>@item.Controller</td>
+                <td>@item.Action</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>

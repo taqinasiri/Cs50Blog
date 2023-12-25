@@ -1,0 +1,59 @@
+﻿@using Blog.Common.Extensions;
+<header id="topnav" class="defaultscroll sticky">
+    <div class="container navigation-menu nav-left">
+        <div class="mx-3">
+            <a class="logo" asp-controller="Home" asp-action="Index" asp-area="">
+                <img src="~/images/Site/logo-dark.png?width=300" height="24" alt="" />
+            </a>
+        </div>
+        <div class="menu-extras position-absolute end-0 me-3">
+            <div class="menu-item">
+                <!-- Mobile menu toggle-->
+                <a class="navbar-toggle" id="isToggle" onclick="toggleMenu()">
+                    <div class="lines">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </a>
+                <!-- End mobile menu toggle-->
+            </div>
+        </div>
+        <div id="navigation">
+            <ul class="navigation-menu">
+                <li>
+                    <a asp-controller="Home" asp-action="Index" asp-area="" class="sub-menu-item">خانه</a>
+                </li>
+                @if (!User.Identity.IsAuthenticated)
+                {
+                    <li>
+
+                        <div>
+                            <a asp-action="Login" asp-controller="Account" asp-area=""
+                            class="btn btn-soft-primary mt-3">ورود / ثبت نام</a>
+                        </div>
+                    </li>
+                }
+                else
+                {
+                    <li>
+                        <div>
+                            <a asp-action="Index" asp-controller="Home" asp-area="Dashboard"
+                            class="btn btn-soft-primary mt-3">
+                                <img class="img-fluid avatar avatar-ex-sm rounded-circle" src="/images/avatars/@User.Identity.GetAvatar()"/>
+                                @User.Identity.GetDisplayName() داشبورد
+                            </a>
+                        </div>
+                    </li>
+                    <li>
+                        <form asp-action="Logout" asp-controller="Account" asp-area="" method="post">
+                            <div>
+                                <button type="submit" class="btn btn-soft-danger mt-3">خروج</button>
+                            </div>
+                        </form>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+</header>

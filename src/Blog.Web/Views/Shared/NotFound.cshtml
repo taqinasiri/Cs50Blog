@@ -1,0 +1,12 @@
+﻿@using System.Net
+@{
+    ViewData["Title"] = "Error 404";
+    Context.Response.StatusCode = (int)HttpStatusCode.NotFound;
+}
+
+<div class="row">
+    <div class="alert alert-success col-4 justify-content-center">
+        <h4>Error 404</h4>
+        <p>Page not found</p>
+    </div>
+</div>

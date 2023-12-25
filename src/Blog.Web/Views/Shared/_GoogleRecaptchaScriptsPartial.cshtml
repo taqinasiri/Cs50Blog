@@ -1,0 +1,34 @@
+﻿@model GoogleReCaptchaSetting
+<script>
+    var recaprch;
+    function onloadCaptchaCallback() {
+        recaprch = grecaptcha.render('@Model.RecaptchaId', {
+            'theme': isDark ? 'dark' : 'ligth'
+        });
+        $("#captcha-Loading").remove();
+    }
+
+    $('#@Model.FormId').submit(function () {
+        return checkGoogleRecaptchaAndShowError(recaprch);
+    });
+
+    function @Model.CallBack () {
+        removeRecaptchaErrorText();
+    }
+
+    function putErrorsInElemnt(element, errors) {
+        $(element).html("<ul></ul>");
+        errors.forEach(error => {
+            $(element + " ul").append("<li>" + error + "</li>")
+        });
+    }
+    function checkGoogleRecaptchaAndShowError(recaptcha) {
+        var response = grecaptcha.getResponse(recaptcha);
+        var result = response.length !== 0;
+        if (!result) {
+            $('span[data-valmsg-for="GoogleReCaptchaResponse"]').html('لطفا اعتبار سنجی را کامل کنید')
+        }
+        return result;
+    }
+    function removeRecaptchaErrorText() { $('span[data-valmsg-for="GoogleReCaptchaResponse"]').html(''); }
+</script>

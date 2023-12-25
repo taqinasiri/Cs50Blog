@@ -1,0 +1,176 @@
+﻿@model SearchingUsersViewModels
+@{
+    ViewData["Title"] = "لیست کاربران";
+}
+
+<div class="row justify-content-center mb-3">
+    <div class="col-md-12">
+        <div class="card shadow rounded border-0">
+            <div class="card-body">
+                <h6 class="card-title">جستجو</h6>
+                <form asp-action="Index" id="filter-form"
+                    method="get" class="mt-4">
+                    <input asp-for="@Model.filters.CurrentPage"/>
+                    <div class="row">
+                        <div asp-validation-summary="ModelOnly" class="text-danger" id="vlidation-summary">
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label" asp-for="@Model.filters.UserName"></label>
+                                <div class="form-icon position-relative">
+                                    <i class="icons mdi mdi-account"></i>
+                                    <input class="form-control ps-5" asp-for="@Model.filters.UserName"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label" asp-for="@Model.filters.Email"></label>
+                                <div class="form-icon position-relative">
+                                    <i class="icons mdi mdi-account"></i>
+                                    <input class="form-control ps-5" asp-for="@Model.filters.Email"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                 <label class="form-label" asp-for="@Model.filters.ActiveStatus"></label>
+                                 <select class="form-select form-control" asp-for="@Model.filters.ActiveStatus" asp-items="@Model.filters.ActiveStatusItems"></select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                 <label class="form-label" asp-for="@Model.filters.EmailConfirmedStatus"></label>
+                                 <select class="form-select form-control" asp-for="@Model.filters.EmailConfirmedStatus" asp-items="@Model.filters.EmailConfirmedStatusItems"></select>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-primary">جستجو</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@if (Model.Users.Any())
+{
+    <div class="table-responsive bg-white shadow rounded">
+        <table class="table mb-0 table-center">
+            <thead>
+                <tr>
+                    <th scope="col" class="border-bottom">@Html.DisplayNameFor(model => model.Users.First().Avatar)</th>
+                    <th scope="col" class="border-bottom">@Html.DisplayNameFor(model => model.Users.First().UserName)</th>
+                    <th scope="col" class="border-bottom">@Html.DisplayNameFor(model => model.Users.First().Email)</th>
+                    <th scope="col" class="border-bottom">@Html.DisplayNameFor(model => model.Users.First().CreatedDateTime)</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Users)
+                {
+                    <tr @(!item.IsActive? "class=bg-soft-danger":"") data-bs-target="#user-card" data-bs-toggle="modal" onclick="ShowUserDetails(@item.Id)">
+                        <td><img src="~/images/avatars/@item.Avatar" class="img-fluid avatar avatar-md-sm me-2 rounded-circle"/></td>
+                        <td>@item.UserName</td>
+                        <td @(!item.EmailConfirmed? "class=bg-soft-warning":"")>@item.Email</td>
+                        <td>@item.CreatedDateTime.ToLongPersianDateTimeString()</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+</div>
+    <div class="d-flex justify-content-center mt-3">    
+    <ul class="pagination mb-0">
+        <li class="page-item"><button class="page-link @(Model.filters.CurrentPage == 1?"btn btn-mute":"")" @(Model.filters.CurrentPage == 1?"disabled":"") value="@(Model.filters.CurrentPage - 1)">قبلی </button></li>
+        @for (int counter = 1; counter <= Model.filters.PagesCount; counter++)
+        {
+            <li class="page-item @(Model.filters.CurrentPage == counter? "active":"")">
+                 <button class="page-link" name="page" value="@counter">@counter</button>
+            </li>
+        }
+        <li class="page-item"><button class="page-link @(Model.filters.CurrentPage == Model.filters.PagesCount?"btn btn-mute":"")" @(Model.filters.CurrentPage == Model.filters.PagesCount?"disabled":"") value="@(Model.filters.CurrentPage + 1)">بعدی </button></li>
+    </ul>
+</div>
+}
+else
+{
+    <div class="alert bg-soft-warning text-center">
+        <h4 class="alert-heading">موردی یافت نشد</h4>
+        <p>با توجه به فیلتر های وارد شده موردی یافت نشد</p>
+    </div>
+}
+
+<div class="modal fade" id="user-card" tabindex="-1" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content rounded shadow border-0">
+            <div class="modal-body py-5">
+                <div class="text-center">
+                    <img src="" class="avatar avatar-medium rounded-circle shadow" id="modelAvatar">
+                    <div class="mt-4">
+                        <h4 id="modalUserName"></h4>
+                        <h5 id="modalEmail"></h5>
+                        <p class="text-muted" id="modalCreatedDateTime"></p>
+                        <div class="bg-soft-info text-dark d-none" id="externalLogins">
+                            <span class="text-muted">ورود های خارجی : </span>
+                            <p></p>
+                        </div>
+                        <div class="mt-4">
+                            <a id="modalRolesLink" class="btn btn-soft-info w-100" >ویرایش نقش ها</a>
+                        </div>
+                        <div class="mt-4">
+                            <form asp-action="ChangeUserActive" asp-controller="ManageUsers" asp-area="Admin">
+                                <button class="btn w-100" id="modalActiveButton" name="userId"></button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script>
+        $('#ManageUsers').addClass('active');
+        $('.page-link').click(function(el){
+            $('#filters_CurrentPage').val(el.target.value);
+            $('#filter-form').submit();
+        });
+
+        function ShowUserDetails(userId) {
+            $.get( "/Admin/ManageUsers/Details/"+userId,
+                function(data,status){
+                    $('#modelAvatar').attr('src','/images/avatars/'+data.avatar);
+                    //$('#modalRolesLink').attr('href','/Admin/ManageUsers/EditUser?userId='+data.id);
+                    $('#modalRolesLink').attr('href','/Admin/ManageUsers/EditUser/'+data.id);
+                    if(!data.emailConfirmed){
+                        $('#modalEmail').addClass('text-danger');
+                    }else{
+                        $('#modalEmail').removeClass('text-danger');
+                    }
+                    $('#modalUserName').html(data.userName);
+                    $('#modalEmail').html(data.email);
+                    $('#modalCreatedDateTime').html(data.createdDateTime);
+                    $('#modalActiveButton').val(data.id);
+                    $('#externalLogins').addClass('d-none');
+                    $('#externalLogins>p').html('');
+                    if(data.externalLogins.length > 0){
+                        $('#externalLogins').removeClass('d-none');
+                        data.externalLogins.forEach(function(element){
+                            $('#externalLogins>p').append(element+'<br/>');
+                        });
+                    }
+                    if(data.isActive){
+                        $('#modalActiveButton').removeClass('btn-success');
+                        $('#modalActiveButton').addClass('btn-danger');
+                        $('#modalActiveButton').html('غیر فعال سازی');
+                    }else{
+                        $('#modalActiveButton').removeClass('btn-danger');
+                        $('#modalActiveButton').addClass('btn-success');
+                        $('#modalActiveButton').html('فعال سازی');
+                    }
+                    console.log(data);
+                });
+        }
+    </script>
+}

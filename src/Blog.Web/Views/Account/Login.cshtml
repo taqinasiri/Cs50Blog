@@ -1,0 +1,41 @@
+﻿@model Blog.ViewModels.Account.LoginViewModel
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+<div class="container py-5">
+    <div class="row mb-5">
+        <div class="col-md-8 col-xl-6 text-center mx-auto">
+            <p class="fw-bold text-success mb-2">Login</p>
+            <h2 class="fw-bold">Welcome to blog</h2>
+        </div>
+    </div>
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-6 col-xl-4">
+            <div>
+                <form class="p-3 p-xl-4" method="post" asp-route-returnUrl="@ViewData["ReturnUrl"]">
+                    <div asp-validation-summary="All"></div>
+                    <div class="mb-3">
+                        <input asp-for="UserName" class="form-control">
+                        <span asp-validation-for="UserName" class="text-warning"></span>
+                    </div>
+                    <div class="mb-3">
+                        <input asp-for="Password" class="form-control">
+                        <span asp-validation-for="Password" class="text-warning"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="RememberMe" class="form-label"></label>
+                        <input asp-for="RememberMe">
+                    </div>
+                    <div><a asp-action="ForgotPassword" asp-controller="Account" class="text-warning">Forgot Password</a></div>
+                    <div><button class="btn btn-primary shadow d-block w-100" type="submit">Login</button></div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,118 @@
+﻿@using Blog.ViewModels.Roles;
+@using Blog.Services.Contracts.Identity;
+@model EditUserRolesViewModel
+@inject IRoleManagerService _roleManager;
+@{
+    ViewData["Title"] = "ویرایش نقش های کاربر";
+    var roles = _roleManager.GetAllRoleNames();
+}
+<h3 class="bg-soft-info p-3 mx-2 rounded-3 text-dark text-center">ویرایش نقش های کاربر</h3>
+<div class="bg-soft-info text-dark rounded-3 mx-2 p-3 text-center">
+    <div class="row">
+        <div class="col-md-4">
+            <img src="/images/avatars/@Model.Avatar" class="avatar avatar-medium rounded-circle shadow" id="modelAvatar">
+        </div>
+        <div class="col-md-6">
+            <h4>@Model.UserName</h4>
+            <h5 class="text-muted">@Model.Email</h5>
+        </div>
+    </div>
+    <div class="row text-start">
+        <form asp-action="EditUser" method="post" enctype="multipart/form-data">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input asp-for="Id"/>
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label class="form-label" asp-for="DisplayName"></label>
+                    <div class="form-icon position-relative">
+                        <i class="icons mdi mdi-account"></i>
+                        <input asp-for="DisplayName" class="form-control ps-5">
+                        <span asp-validation-for="DisplayName" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label class="form-label" asp-for="NewAvatar"></label>
+                    <div class="form-icon position-relative">
+                        <i class="icons mdi mdi-image"></i>
+                        <input asp-for="NewAvatar" class="form-control ps-5">
+                        <span asp-validation-for="NewAvatar" class="text-danger"></span>
+                    </div>
+               </div>
+            </div>
+            <div class="col-md-12">
+                <div class="mb-3">
+                    <label class="form-label" asp-for="Biography"></label>
+                    <div class="form-icon position-relative">
+                        <i class="icons mdi mdi-card-text"></i>
+                        <textarea asp-for="Biography" class="form-control ps-5"></textarea>
+                        <span asp-validation-for="Biography" class="text-danger"></span>
+                    </div>
+               </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label class="form-label" asp-for="Website"></label>
+                    <div class="form-icon position-relative">
+                        <i class="icons mdi mdi-web"></i>
+                        <input asp-for="Website" class="form-control ps-5">
+                        <span asp-validation-for="Website" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label class="form-label" asp-for="Instagram"></label>
+                    <div class="form-icon position-relative">
+                        <i class="icons mdi mdi-instagram"></i>
+                        <input asp-for="Instagram" class="form-control ps-5">
+                        <span asp-validation-for="Instagram" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label class="form-label" asp-for="Twitter"></label>
+                    <div class="form-icon position-relative">
+                        <i class="icons mdi mdi-twitter"></i>
+                        <input asp-for="Twitter" class="form-control ps-5">
+                        <span asp-validation-for="Twitter" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label class="form-label" asp-for="Linkedin"></label>
+                    <div class="form-icon position-relative">
+                        <i class="icons mdi mdi-linkedin"></i>
+                        <input asp-for="Linkedin" class="form-control ps-5">
+                        <span asp-validation-for="Linkedin" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="mb-3">
+                    @foreach (var item in roles)
+                    {
+                        <div>
+                            <input class="form-check-input" type="checkbox" value="@item" name="Roles"
+                                @(Model.Roles.Any(r => r == item.ToString())?"checked":"")>
+                            <label class="form-label">@item</label>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <button type="submit" class="btn btn-info w-100">ثبت</button>
+            </div>
+        </div>
+    </form>
+    </div>
+</div>
+@section Scripts{
+    <partial name="_ValidationScriptsPartial"/>
+}

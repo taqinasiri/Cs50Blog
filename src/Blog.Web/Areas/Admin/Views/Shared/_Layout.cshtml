@@ -1,0 +1,112 @@
+﻿@using Blog.Common.Extensions;
+@using Blog.Common.Constants;
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta name="author" content="MohammadTaqiNasiri" />
+    <meta name="email" content="" />
+    <meta name="website" content="" />
+
+    <title>بلاگ | @ViewData["Title"]</title>
+    <!-- favicon -->
+    <link rel="shortcut icon" href="~/favicon.ico" />
+    <!-- Bootstrap -->
+    <link href="~/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <!-- Icons -->
+    <link rel="stylesheet" href="~/css/materialdesignicons.min.css" />
+    <!-- Slider -->
+    <link rel="stylesheet" href="~/css/tiny-slider.css" />
+    <!-- Main Css -->
+    <link href="~/css/style.min.css" rel="stylesheet" type="text/css" id="theme-opt" />
+    <link href="~/css/colors/skyblue.css" rel="stylesheet" id="color-opt" />
+    <link href="~/css/site.css" rel="stylesheet" asp-append-version="true" />
+    @RenderSection("Styles",false)
+</head>
+
+<body>
+    <!-- Loader -->
+    <div id="preloader">
+        <div id="status">
+            <div class="spinner">
+                <div class="double-bounce1"></div>
+                <div class="double-bounce2"></div>
+            </div>
+        </div>
+    </div>
+    <!-- Loader -->
+
+    <partial name="_HeaderPartail" />
+    <section class="section mt-60">
+        <div class="container mt-lg-3">
+            <div class="row">
+                <div class="col-lg-4 col-md-6 col-12 d-lg-block mb-5">
+                    <div class="sidebar sticky-bar p-4 rounded shadow">
+                        <div class="widget">
+                            <h5 class="widget-title text-centet">مدیریت کاربران</h5>
+                            <ul class="list-unstyled sidebar-nav mb-0" id="navmenu-nav">
+                            <li class="navbar-item account-menu px-0" id="ManageUsers">
+                                <a asp-action="Index" asp-controller="ManageUsers" asp-area="Admin" class="navbar-link d-flex rounded shadow align-items-center py-2 px-4">
+                                    <span class="h4 mb-0"><i class="mdi mdi-account-supervisor-circle"></i></span>
+                                    <h6 class="mb-0 ms-2">لیست کاربران</h6>
+                                </a>
+                            </li>
+                            <li class="navbar-item account-menu px-0 mt-2" id="ManageUsersStatistics">
+                                <a asp-action="Statistics" asp-controller="ManageUsers" asp-area="Admin" class="navbar-link d-flex rounded shadow align-items-center py-2 px-4">
+                                    <span class="h4 mb-0"><i class="mdi mdi-chart-line"></i></span>
+                                    <h6 class="mb-0 ms-2">آمار کاربران</h6>
+                                </a>
+                            </li>
+                            </ul>
+                        </div>
+                        <div class="widget">
+                           <h5 class="widget-title text-centet">مدیریت نقش ها</h5>
+                           <ul class="list-unstyled sidebar-nav mb-0" id="navmenu-nav">
+                           <li class="navbar-item account-menu px-0" id="ManageRoles">
+                               <a asp-action="Index" asp-controller="ManageRoles" asp-area="Admin" class="navbar-link d-flex rounded shadow align-items-center py-2 px-4">
+                                   <span class="h4 mb-0"><i class="mdi mdi-star"></i></span>
+                                   <h6 class="mb-0 ms-2">لیست نقش ها</h6>
+                               </a>
+                           </li>
+                           <li class="navbar-item account-menu px-0 mt-2" id="AddRole">
+                               <a asp-action="AddRole" asp-controller="ManageRoles" asp-area="Admin" class="navbar-link d-flex rounded shadow align-items-center py-2 px-4">
+                                   <span class="h4 mb-0"><i class="mdi mdi-star-plus"></i></span>
+                                   <h6 class="mb-0 ms-2">افزودن نقش</h6>
+                               </a>
+                           </li>
+                           </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-8 col-12">
+                    @RenderBody()
+                </div>
+            </div><!--end col-->
+        </div><!--end row-->
+        <!--end container-->
+    </section>
+    <partial name="_FooterPartail" />
+
+
+    <!-- Back to top -->
+    <a onclick="topFunction()" id="back-to-top" class="btn btn-icon btn-primary back-to-top">
+        <i data-feather="arrow-up" class="icons"></i>
+    </a>
+
+    <script src="~/lib/bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/lib/jquery/jquery.min.js"></script>
+    <script src="~/js/feather.min.js"></script>
+    <!-- Google Recaptcha -->
+    <script src="https://www.google.com/recaptcha/api.js?hl=fa&onload=onloadCaptchaCallback&render=explicit"
+        async defer></script>
+    <!-- Main Js -->
+    <script src="~/js/app.js"></script>
+    @RenderSection("Scripts",false)
+    <script src="~/js/site.js" asp-append-version="true"></script>
+</body>
+
+</html>

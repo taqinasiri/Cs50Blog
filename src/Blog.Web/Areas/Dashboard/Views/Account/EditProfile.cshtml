@@ -1,0 +1,96 @@
+﻿@using Blog.ViewModels.Dashboard;
+@model EditProfileViewModel
+@{
+    ViewData["Title"] = "ویرایش حساب کاربری";
+}
+<div class="card border-0 rounded shadow  mb-3">
+    <div class="card-body">
+        <h5 class="text-md-start text-center">ویرایش پروفایل</h5>
+        <form asp-action="EditProfile" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label class="form-label" asp-for="DisplayName"></label>
+                        <div class="form-icon position-relative">
+                            <i class="icons mdi mdi-account"></i>
+                            <input asp-for="DisplayName" class="form-control ps-5">
+                            <span asp-validation-for="DisplayName" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label class="form-label" asp-for="Avatar"></label>
+                        <div class="form-icon position-relative">
+                            <i class="icons mdi mdi-image"></i>
+                            <input asp-for="Avatar" class="form-control ps-5">
+                            <span asp-validation-for="Avatar" class="text-danger"></span>
+                        </div>
+                   </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="mb-3">
+                        <label class="form-label" asp-for="Biography"></label>
+                        <div class="form-icon position-relative">
+                            <i class="icons mdi mdi-card-text"></i>
+                            <textarea asp-for="Biography" class="form-control ps-5"></textarea>
+                            <span asp-validation-for="Biography" class="text-danger"></span>
+                        </div>
+                   </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label class="form-label" asp-for="Website"></label>
+                        <div class="form-icon position-relative">
+                            <i class="icons mdi mdi-web"></i>
+                            <input asp-for="Website" class="form-control ps-5">
+                            <span asp-validation-for="Website" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label class="form-label" asp-for="Instagram"></label>
+                        <div class="form-icon position-relative">
+                            <i class="icons mdi mdi-instagram"></i>
+                            <input asp-for="Instagram" class="form-control ps-5">
+                            <span asp-validation-for="Instagram" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label class="form-label" asp-for="Twitter"></label>
+                        <div class="form-icon position-relative">
+                            <i class="icons mdi mdi-twitter"></i>
+                            <input asp-for="Twitter" class="form-control ps-5">
+                            <span asp-validation-for="Twitter" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label class="form-label" asp-for="Linkedin"></label>
+                        <div class="form-icon position-relative">
+                            <i class="icons mdi mdi-linkedin"></i>
+                            <input asp-for="Linkedin" class="form-control ps-5">
+                            <span asp-validation-for="Linkedin" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <button type="submit" class="btn btn-primary">ویرایش</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+@section Scripts{
+<partial name="_ValidationScriptsPartial"/>
+<script>
+    $('#EditProfile').addClass('active');
+</script>
+}

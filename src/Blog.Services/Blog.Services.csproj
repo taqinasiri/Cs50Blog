@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net7.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<FrameWorkReference Include="Microsoft.AspNetCore.App" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="MailKit" Version="3.4.2" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Blog.DataLayer\Blog.DataLayer.csproj" />
+		<ProjectReference Include="..\Blog.Entities\Blog.Entities.csproj" />
+		<ProjectReference Include="..\Blog.ViewModels\Blog.ViewModels.csproj" />
+	</ItemGroup>
+
+</Project>

@@ -1,0 +1,57 @@
+﻿@model IEnumerable<Blog.ViewModels.Users.ShowUserViewModel>
+
+@{
+    ViewData["Title"] = "Users";
+}
+
+<h1>Users</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.UserName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedDateTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsActive)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.UserName
+                </td>
+                <td>
+                    @item.Email
+                </td>
+                <td>
+                    @item.CreatedDateTime.ToShortDateString()
+                </td>
+                <td>
+                    @if (item.Id != 1)
+                    {
+                        <form asp-action="ChangeUserStatus" asp-route-userId="@item.Id" class="d-inline" method="post">
+                            @if (item.IsActive)
+                            {
+                                <button class="btn btn-danger">Deactivate</button>
+                            }
+                            else
+                            {
+                                <button class="btn btn-primary">Active</button>
+                            }
+                        </form>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

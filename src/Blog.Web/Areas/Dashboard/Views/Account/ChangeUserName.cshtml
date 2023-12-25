@@ -1,0 +1,46 @@
+﻿@using Blog.ViewModels.Dashboard;
+@model ChangeUserNameViewModel
+@{
+    ViewData["Title"] = "تغییر نام کاربری";
+}
+
+<div class="card border-0 rounded shadow">
+    <div class="card-body">
+        <h5 class="text-md-start text-center">تغییر نام کاربری</h5>
+        <p class="text-warning">هشدار : این کار تمام لینک های حساب کاربری شما را عوض میکند، قبل از تغییر از انجام کار اطمینان حاصل کنید</p>
+        <form asp-action="ChangeUserName" id="change-username-form" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="row mt-4">
+                <div class="col-md-12">
+                    <div class="mb-3">
+                        <label class="form-label" asp-for="UserName"></label>
+                        <div class="form-icon position-relative">
+                            <i class="icons mdi mdi-account"></i>
+                            <input asp-for="UserName" class="form-control ps-5">
+                            <span asp-validation-for="UserName" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="mb-3">
+                        <GoogleRecaptchaHelper asp-id="change-username-recaptcha"
+                            asp-callback="changeUserNameRecaptchaCallBack"></GoogleRecaptchaHelper>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <button type="submit" class="btn btn-primary">ویرایش</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+@section Scripts{
+<partial name="_ValidationScriptsPartial"/>
+    <partial name="_GoogleRecaptchaScriptsPartial"
+    model='new GoogleReCaptchaSetting("change-username-recaptcha","change-username-form","changeUserNameRecaptchaCallBack")' />
+<script>
+    $('#ChangeUserName').addClass('active');
+</script>
+}

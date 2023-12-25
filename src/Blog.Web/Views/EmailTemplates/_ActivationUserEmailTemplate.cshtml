@@ -1,0 +1,12 @@
+﻿@model Blog.ViewModels.Account.RegisterEmailConfirmationViewModel
+@{
+    Layout = "~/Views/EmailTemplates/_EmailsLayout.cshtml";
+    ViewData["Title"] = "Confirm Email";
+    var activationUserLink = Url.Action("ConfirmationAccount", "Account", new { area = "", code = Model.ActivationCode, userName = Model.UserName }, protocol: Context.Request.Scheme);
+}
+<h3>
+    @Model.UserName 
+    <br />
+    Register date : @Model.CreatedDateTime
+</h3>
+<a href="@activationUserLink">Confirm Email</a>

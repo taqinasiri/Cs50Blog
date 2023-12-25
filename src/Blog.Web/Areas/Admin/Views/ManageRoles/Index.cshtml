@@ -1,0 +1,117 @@
+﻿@model RolesWithFilterAndPaginationViewModel
+@{
+    ViewData["Title"] = "لیست کاربران";
+}
+<div class="row justify-content-center mb-3">
+    <div class="col-md-12">
+        <div class="card shadow rounded border-0">
+            <div class="card-body">
+                <form asp-action="Index" id="filter-form"
+                    method="get" class="mt-4">
+                    <input asp-for="@Model.CurrentPage" name="page"/>
+                    <div class="row">
+                        <div asp-validation-summary="ModelOnly" class="text-danger" id="vlidation-summary">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="mb-3">
+                                <div class="form-icon position-relative">
+                                    <i class="icons mdi mdi-magnify"></i>
+                                    <input class="form-control ps-5" asp-for="SearchKey" name="filter"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-primary">جستجو</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row mx-1 mb-3">
+    <a asp-action="AddRole" asp-controller="ManageRoles" asp-area="Admin" class="btn btn-info">افزودن نقش</a>
+</div>
+@if (Model.Roles.Any())
+{
+    <div class="table-responsive bg-white shadow rounded">
+        <table class="table mb-0 table-center">
+            <thead>
+                <tr>
+                    <th scope="col" class="border-bottom">@Html.DisplayNameFor(model => model.Roles.First().Name)</th>
+                    <th scope="col" class="border-bottom">@Html.DisplayNameFor(model => model.Roles.First().UsersInRoleCount)</th>
+                    <th scope="col" class="border-bottom">عملیات</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Roles)
+                {
+                    <tr>
+                        <td>@item.Name</td>
+                        <td>@item.UsersInRoleCount</td>
+                        <td>
+                            <a asp-action="RoleDetails" asp-controller="ManageRoles" asp-area="Admin" asp-route-Id="@item.Id" class="btn btn-soft-info">اطلاعات</a>
+                            <a asp-action="EditRole" asp-controller="ManageRoles" asp-area="Admin" asp-route-Id="@item.Id" class="btn btn-soft-success">ویرایش</a>
+                            <a data-bs-target="#confirm-delete-card" data-bs-toggle="modal" onclick="ShowDeleteConfirmModal(@item.Id)" class="btn btn-soft-danger">حذف</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+</div>
+    <div class="d-flex justify-content-center mt-3">    
+    <ul class="pagination mb-0">
+        <li class="page-item"><button class="page-link @(Model.CurrentPage == 1?"btn btn-mute":"")" @(Model.CurrentPage == 1?"disabled":"") value="@(Model.CurrentPage - 1)">قبلی </button></li>
+        @for (int counter = 1; counter <= Model.PagesCount; counter++)
+        {
+            <li class="page-item @(Model.CurrentPage == counter? "active":"")">
+                 <button class="page-link" name="page" value="@counter">@counter</button>
+            </li>
+        }
+        <li class="page-item"><button class="page-link @(Model.CurrentPage == Model.PagesCount?"btn btn-mute":"")" @(Model.CurrentPage == Model.PagesCount?"disabled":"") value="@(Model.CurrentPage + 1)">بعدی </button></li>
+    </ul>
+</div>
+}
+else
+{
+    <div class="alert bg-soft-warning text-center">
+        <h4 class="alert-heading">موردی یافت نشد</h4>
+        <p>با توجه به فیلتر های وارد شده موردی یافت نشد</p>
+    </div>
+}
+
+<div class="modal fade" id="confirm-delete-card" tabindex="-1" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content rounded shadow border-0">
+            <div class="modal-body py-5">
+                <div class="text-center">
+                    <div class="mt-4">
+                        <p class="text-danger">آیا از حذف نقش اطمینان دارید؟ این عملیات غیر قابل بازگشت است</p>
+                        <div class="mt-4">
+                            <form asp-action="DeleteRole" asp-controller="ManageRoles" asp-area="Admin" method="post">
+                                <button class="btn btn-danger" id="modalDeleteButton" name="id">حذف</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        $('#ManageRoles').addClass('active');
+        $('.page-link').click(function(el){
+            $('#CurrentPage').val(el.target.value);
+            $('#filter-form').submit();
+        });
+
+        function ShowDeleteConfirmModal(userId) {
+            console.log(userId);
+            $('#modalDeleteButton').val(userId);
+        };
+    </script>
+}

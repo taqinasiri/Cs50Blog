@@ -1,0 +1,12 @@
+﻿@using System.Net
+@{
+    ViewData["Title"] = "Error 404";
+    Context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+}
+
+<div class="row">
+    <div class="alert alert-danger col-4 justify-content-center">
+        <h4>Error 500</h4>
+        <p>Server Error</p>
+    </div>
+</div>
